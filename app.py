@@ -58,6 +58,8 @@ def plot_altair(year=["2020", "2021e"], df=df.copy()):
 app = Dash(
     __name__, external_stylesheets=["https://codepen.io/chriddyp/pen/bWLwgP.css"]
 )
+# To run on server
+server = app.server
 
 app.layout = html.Div(
     [
