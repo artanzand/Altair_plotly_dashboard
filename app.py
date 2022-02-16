@@ -1,4 +1,3 @@
-from turtle import title
 import pandas as pd
 import altair as alt
 from dash import Dash, html, dcc, Input, Output
@@ -30,9 +29,7 @@ def plot_altair(year=["2020", "2021e"], df=df.copy()):
             y=alt.Y("salary_in_usd", title="Salary in USD"),
             color=alt.condition(
                 brush,
-                alt.Color(
-                    "remote_ratio:N", title="Remote Ratio", sort=["0%", "50%", "100%"]
-                ),
+                alt.Color("remote_ratio:N", legend=None),
                 alt.value("lightgray"),
             ),
             opacity=alt.condition(click, alt.value(1.0), alt.value(0.1)),
@@ -45,14 +42,14 @@ def plot_altair(year=["2020", "2021e"], df=df.copy()):
         alt.Chart(df, title="Click on me!")
         .mark_bar()
         .encode(
-            x="count()",
-            y=alt.Y("remote_ratio", title="Remote Ratio", sort=["0%", "50%", "100%"]),
+            y="count()",
+            x=alt.X("remote_ratio", title="Remote Ratio", sort=["0%", "50%", "100%"]),
             color="remote_ratio",
             opacity=alt.condition(click, alt.value(0.9), alt.value(0.2)),
         )
     ).transform_filter(brush)
 
-    overall_plot = (points & bars).add_selection(click)
+    overall_plot = (points | bars).add_selection(click)
 
     return overall_plot.to_html()
 
@@ -78,7 +75,7 @@ app.layout = html.Div(
                         {"label": "2020", "value": "2020"},
                         {"label": "2021", "value": "2021e"},
                     ],
-                    placeholder="2020",
+                    value=["2020", "2021"],
                     multi=True,
                 ),
             ]
