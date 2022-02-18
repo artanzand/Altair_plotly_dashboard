@@ -16,7 +16,7 @@ def plot_altair(year=["2020", "2021e"], df=df.copy()):
     df = df[df["work_year"].isin(year)]
 
     # Create Plot
-    alt.themes.enable("dark")
+    # alt.themes.enable("dark")
 
     brush = alt.selection_interval()
     click = alt.selection_multi(fields=["remote_ratio"])
@@ -85,7 +85,7 @@ app.layout = html.Div(
         html.Iframe(
             id="scatter",
             srcDoc=plot_altair(year=["2020", "2021e"]),
-            style={"border-width": "0", "width": "100%", "height": "1500px"},
+            style={"border-width": "0", "width": "400px", "height": "100%"},
         ),
     ]
 )
