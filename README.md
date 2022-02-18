@@ -1,2 +1,2 @@
-# Altair_plotly_dashboard
+# Data Science Salaries Dashboard
 A data analysis dashboard 
