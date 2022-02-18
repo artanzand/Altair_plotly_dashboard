@@ -15,6 +15,9 @@ def plot_altair(year=["2020", "2021e"], df=df.copy()):
         year = list(year)
     df = df[df["work_year"].isin(year)]
 
+    # Create Plot
+    alt.themes.enable("dark")
+
     brush = alt.selection_interval()
     click = alt.selection_multi(fields=["remote_ratio"])
 
@@ -22,8 +25,8 @@ def plot_altair(year=["2020", "2021e"], df=df.copy()):
         alt.Chart(df, title="Select a window - Salary per Country")
         .mark_circle()
         .encode(
-            x=alt.X("company_location", title="Country"),
-            y=alt.Y("salary_in_usd", title="Salary in USD"),
+            y=alt.Y("company_location", title="Country"),
+            x=alt.X("salary_in_usd", title="Salary in USD"),
             color=alt.condition(
                 brush,
                 alt.Color("remote_ratio:N", legend=None),
@@ -39,14 +42,14 @@ def plot_altair(year=["2020", "2021e"], df=df.copy()):
         alt.Chart(df, title="Click on me!")
         .mark_bar()
         .encode(
-            y="count()",
-            x=alt.X("remote_ratio", title="Remote Ratio", sort=["0%", "50%", "100%"]),
+            x="count()",
+            y=alt.Y("remote_ratio", title="Remote Ratio", sort=["0%", "50%", "100%"]),
             color="remote_ratio",
             opacity=alt.condition(click, alt.value(0.9), alt.value(0.2)),
         )
     ).transform_filter(brush)
 
-    overall_plot = (points | bars).add_selection(click)
+    overall_plot = (points & bars).add_selection(click)
 
     return overall_plot.to_html()
 
