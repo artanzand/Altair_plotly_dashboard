@@ -85,7 +85,7 @@ app.layout = html.Div(
         html.Iframe(
             id="scatter",
             srcDoc=plot_altair(year=["2020", "2021e"]),
-            style={"border-width": "0", "width": "400px", "height": "100%"},
+            style={"border-width": "0", "width": "100%", "height": "1500"},
         ),
     ]
 )
