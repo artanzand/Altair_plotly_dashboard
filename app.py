@@ -16,7 +16,7 @@ def plot_altair(year=["2020", "2021e"], df=df.copy()):
     df = df[df["work_year"].isin(year)]
 
     # Create Plot
-    # alt.themes.enable("dark")
+    alt.themes.enable("dark")
 
     brush = alt.selection_interval()
     click = alt.selection_multi(fields=["remote_ratio"])
